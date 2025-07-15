@@ -15,7 +15,8 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
 // === Ana listeleme fonksiyonu ===
 function listGames(filterText = "") {
   const tbody = document.getElementById('gameList');
-  tbody.innerHTML = '<tr><th></th><th>Ad</th><th>Clone Of</th><th>Sil</th></tr>';
+  // BAŞLIK SATIRI SIRASINI GÜNCELLE
+  tbody.innerHTML = '<tr><th></th><th>Sil</th><th>Ad</th><th>Clone Of</th></tr>'; // "Sil" sütununu "Ad"dan önceye aldık
 
   const allGames = Array.from(xmlDoc.getElementsByTagName('game'));
   const gamesById = new Map();
@@ -85,6 +86,7 @@ function deleteGame(node, row) {
   row.remove();
   changed = true;
   document.getElementById('saveBtn').hidden = false;
+  listGames(document.getElementById('searchInput').value); // Güncel durumu yansıtmak için listeyi yenile
 }
 
 // === Satır oluşturucu ===
@@ -94,27 +96,30 @@ function createGameRow(game, isClone, cloneOfName, groupClass) {
   if (isClone) row.classList.add('cloneRow');
 
   const name = game.getAttribute('name') || "(İsimsiz)";
+  const gameId = game.getAttribute('id'); // Oyunun ID'sini al
 
   // Checkbox
   const cbCell = row.insertCell();
   const cb = document.createElement('input');
   cb.type = 'checkbox';
   cb.className = 'selectGame';
+  cb.dataset.gameId = gameId; // Checkbox'a oyun ID'sini ekle
   cbCell.appendChild(cb);
+
+  // SİL BUTONU BURAYA GELDİ
+  const delCell = row.insertCell();
+  const delBtn = document.createElement('button');
+  delBtn.textContent = 'Sil';
+  delBtn.className = 'danger';
+  delBtn.dataset.gameId = gameId; // Sil butonuna da oyun ID'sini ekle
+  delBtn.onclick = () => deleteGame(game, row);
+  delCell.appendChild(delBtn);
 
   // Ad
   row.insertCell().textContent = name;
 
   // Clone Of
   row.insertCell().textContent = isClone ? cloneOfName || "(Ana oyun bilinmiyor)" : "-";
-
-  // Sil
-  const delCell = row.insertCell();
-  const delBtn = document.createElement('button');
-  delBtn.textContent = 'Sil';
-  delBtn.className = 'danger';
-  delBtn.onclick = () => deleteGame(game, row);
-  delCell.appendChild(delBtn);
 
   return row;
 }
@@ -127,15 +132,21 @@ document.getElementById('deleteSelectedBtn').addEventListener('click', () => {
 
   checked.forEach(cb => {
     const row = cb.closest('tr');
-    const name = row.cells[1].textContent;
+    const gameIdToDelete = cb.dataset.gameId; // Checkbox'tan oyun ID'sini al
+
+    // ID'ye göre XML düğümünü bul
     const gameNode = [...xmlDoc.getElementsByTagName('game')]
-      .find(g => (g.getAttribute('name') || "") === name);
-    if (gameNode) gameNode.parentNode.removeChild(gameNode);
-    row.remove();
+      .find(g => g.getAttribute('id') === gameIdToDelete);
+
+    if (gameNode) {
+      gameNode.parentNode.removeChild(gameNode);
+      row.remove();
+    }
   });
 
   changed = true;
   document.getElementById('saveBtn').hidden = false;
+  listGames(document.getElementById('searchInput').value); // Güncel durumu yansıtmak için listeyi yenile
 });
 
 // === Kaydet (.dat indir) ===
@@ -148,6 +159,7 @@ document.getElementById('saveBtn').addEventListener('click', () => {
   URL.revokeObjectURL(url);
   changed = false;
   alert('Yeni .dat indirildi!');
+  document.getElementById('saveBtn').hidden = true;
 });
 
 // === Seç / Kaldır ===
@@ -161,4 +173,8 @@ document.getElementById('toggleThemeBtn').addEventListener('click', () => {
   document.body.classList.toggle('dark');
   const btn = document.getElementById('toggleThemeBtn');
   btn.textContent = document.body.classList.contains('dark') ? '☀️ Gündüz Modu' : '🌙 Gece Modu';
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('saveBtn').hidden = true;
 });

@@ -24,10 +24,25 @@ h1 { margin-bottom: 20px; }
 }
 
 /* Checkbox sütunu dar ve ortalı */
-#gameList td:first-child {
+#gameList td:first-child { /* Checkbox sütunu */
   width: 40px;
   text-align: center;
 }
+#gameList th:first-child { /* Checkbox başlık sütunu */
+  width: 40px;
+  text-align: center;
+}
+
+/* Yeni Sil butonu sütunu */
+#gameList td:nth-child(2) { /* Sil butonu sütunu */
+  width: 60px; /* Buton için yeterli genişlik */
+  text-align: center;
+}
+#gameList th:nth-child(2) { /* Sil butonu başlık sütunu */
+  width: 60px;
+  text-align: center;
+}
+
 
 #gameList tr:hover {
   background: #f2f2f2;
@@ -65,15 +80,42 @@ button:hover { opacity: 0.9; }
   z-index: 1000;
 }
 
-#controlPanel button { background-color: #0275d8; color: white; }
+#controlPanel button {
+  background-color: #0275d8;
+  color: white;
+}
 #controlPanel button:hover { background-color: #025aa5; }
 
-/* Silme Butonları */
-#controlPanel button.danger { background-color: #d9534f; }
-#controlPanel button.danger:hover { background-color: #c9302c; }
+/* Silme Butonları (sadece gameList içindeki sil butonları için bu renk uygulanacak) */
+#gameList button.danger { background-color: #d9534f; }
+#gameList button.danger:hover { background-color: #c9302c; }
 
-/* Gizli butonlar */
-#controlPanel button[hidden] { display: none; }
+/* Yeni eklenen tablo kontrol butonları için stil */
+#tableControlButtons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#tableControlButtons button {
+  background-color: #0275d8;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#tableControlButtons button.danger {
+  background-color: #d9534f;
+}
+#tableControlButtons button.danger:hover {
+  background-color: #c9302c;
+}
+
+/* Gizli butonlar (genel kullanım için) */
+button[hidden] { display: none; }
+
 
 /* === Gece Modu === */
 body.dark            { background-color: #1c1c1c; color: #f5f5f5; }
@@ -83,9 +125,14 @@ body.dark #gameList td { border-color: #555; }
 body.dark #controlPanel { background-color: #2e2e2e; border-color: #444; }
 body.dark #controlPanel button       { background-color: #444; }
 body.dark #controlPanel button:hover { background-color: #666; }
-body.dark #controlPanel button.danger { background-color: #a94442; }
-body.dark #controlPanel button.danger:hover { background-color: #843534; }
 body.dark #controlPanel button { color: white; }
+
+/* Yeni eklenen butonların gece modu stilleri */
+body.dark #tableControlButtons button { background-color: #444; }
+body.dark #tableControlButtons button:hover { background-color: #666; }
+body.dark #tableControlButtons button.danger { background-color: #a94442; }
+body.dark #tableControlButtons button.danger:hover { background-color: #843534; }
+
 
 /* Klon satırları */
 .cloneRow td {

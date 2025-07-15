@@ -12,13 +12,16 @@
   <input type="file" id="fileInput" accept=".dat,.xml" />
   <input type="text" id="searchInput" placeholder="Oyun ara..." />
 
+  <div id="tableControlButtons">
+    <button id="selectAllBtn">Tümünü Seç</button>
+    <button id="deselectAllBtn">Tümünü Kaldır</button>
+    <button id="deleteSelectedBtn" class="danger" hidden>Seçilileri Sil</button>
+  </div>
+
   <table id="gameList"></table>
 
   <div id="controlPanel">
     <button id="toggleThemeBtn">🌙 Gece Modu</button>
-    <button id="selectAllBtn">Tümünü Seç</button>
-    <button id="deselectAllBtn">Tümünü Kaldır</button>
-    <button id="deleteSelectedBtn" class="danger" hidden>Seçilileri Sil</button>
     <button id="saveBtn" hidden>Kaydet (.dat indir)</button>
   </div>
 
