@@ -25,8 +25,15 @@ h1 {
   text-align: left;
 }
 
+/* Checkbox sütunu dar ve ortalı */
+#gameList td:first-child {        /* --- EKLENDİ --- */
+  width: 40px;
+  text-align: center;
+}
+
 #gameList tr:hover {
   background: #f2f2f2;
+  transition: background-color 0.3s ease;  /* --- EKLENDİ --- */
 }
 
 /* === Genel Butonlar === */
@@ -39,6 +46,12 @@ button {
 
 button:hover {
   opacity: 0.9;
+}
+
+/* Silme butonları boyut ayarı */
+#gameList button.danger {        /* --- EKLENDİ --- */
+  padding: 6px 10px;
+  font-size: 0.9em;
 }
 
 /* === Sabit Panel === */
@@ -120,4 +133,17 @@ body.dark #controlPanel button.danger:hover {
 body.dark #controlPanel button {
   background-color: #444;
   color: white;
+}
+
+/* Klon satırları */
+.cloneRow td {
+  color: #666;
+  font-style: italic;
+  padding-left: 30px;
+  background-color: #f9f9f9;
+}
+
+body.dark .cloneRow td {
+  background-color: #2e2e2e;
+  color: #aaa;
 }
