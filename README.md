@@ -1,4 +1,4 @@
-# Xperian DAT File Organzier
+# Xperian DAT File Organizer
 
 A web-based tool to help you view, edit, and organize ROM archive data stored in `.dat` files.
 
@@ -35,6 +35,8 @@ To run this project on your own machine:
    git clone https://github.com/your-username/dat-manager.git
 
 ---------------------------------------------------------------
+
+# Xperian DAT File Organizer
 
 ROM oyun arşivlerinizi düzenlemenizi ve .dat dosyaları içindeki verileri kolayca listeleyip yönetmenizi sağlayan web tabanlı bir araçtır.
 
