@@ -1,0 +1,65 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+#gameList {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: white;
+}
+
+#gameList th,
+#gameList td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.danger {
+  background-color: #d9534f;
+  color: white;
+}
+
+button.danger:hover {
+  background-color: #c9302c;
+}
+
+#saveBtn, #deleteSelectedBtn {
+  margin-top: 10px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+#saveBtn:hover, #deleteSelectedBtn:hover {
+  background-color: #449d44;
+}
+
+#multiControls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+}
+
+#multiControls button {
+  background-color: #0275d8;
+  color: white;
+}
+
+#multiControls button:hover {
+  background-color: #025aa5;
+}

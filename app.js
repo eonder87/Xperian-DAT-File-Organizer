@@ -113,3 +113,13 @@ document.getElementById('deleteSelectedBtn').addEventListener('click', () => {
   changed = true;
   document.getElementById('saveBtn').hidden = false;
 });
+
+// Tümünü Seç
+document.getElementById('selectAllBtn').addEventListener('click', () => {
+  document.querySelectorAll('.selectGame').forEach(cb => cb.checked = true);
+});
+
+// Tümünü Kaldır
+document.getElementById('deselectAllBtn').addEventListener('click', () => {
+  document.querySelectorAll('.selectGame').forEach(cb => cb.checked = false);
+});

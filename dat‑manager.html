@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Dat Yöneticisi</title>
-  <style>
-    body { font-family: sans-serif; padding: 1rem; }
-    #gameList tr:hover { background:#f2f2f2; cursor:pointer; }
-    .danger { color:red; }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <h1>Oyun Listesi</h1>
 
@@ -22,6 +19,11 @@
   <!-- 3) Kaydet (silme sonrası) -->
   <button id="deleteSelectedBtn" hidden>Seçilileri Sil</button>
   <button id="saveBtn" hidden>Değişiklikleri Kaydet (.dat indir)</button>
+
+<div id="multiControls">
+  <button id="selectAllBtn">Tümünü Seç</button>
+  <button id="deselectAllBtn">Tümünü Kaldır</button>
+</div>
 
   <script src="app.js"></script>
 </body>
