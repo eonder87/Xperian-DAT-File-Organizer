@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dat Yöneticisi</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; }
+    #gameList tr:hover { background:#f2f2f2; cursor:pointer; }
+    .danger { color:red; }
+  </style>
+</head>
+<body>
+  <h1>Oyun Listesi</h1>
+
+  <!-- 1) Dosya seç -->
+  <input type="file" id="fileInput" accept=".dat,.xml" />
+
+  <!-- 2) Liste burada oluşacak -->
+  <table id="gameList" border="1" cellpadding="4"></table>
+
+  <!-- 3) Kaydet (silme sonrası) -->
+  <button id="saveBtn" hidden>Değişiklikleri Kaydet (.dat indir)</button>
+
+  <script src="app.js"></script>
+</body>
+</html>
