@@ -19,7 +19,8 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
 // 2) XML içindeki <game> nodelarını tabloya bas
 function listGames(filterText = "") {
   const tbody = document.getElementById('gameList');
-  tbody.innerHTML = '<tr><th></th><th>Ad</th><th>Sil</th></tr>';
+  tbody.innerHTML = '<tr><th></th><th>Ad</th><th>Clone Of</th><th>Sil</th></tr>';
+
 
   const allGames = Array.from(xmlDoc.getElementsByTagName('game'));
 
@@ -29,10 +30,20 @@ function listGames(filterText = "") {
   });
 
   filteredGames.forEach((game, idx) => {
-    const name = game.getAttribute('name') || `Game #${idx+1}`;
+    const name = game.getAttribute('name') || `Game #${idx + 1}`;
+    const cloneOfId = game.getAttribute('cloneofid');
+    const category = game.getElementsByTagName('category')[0]?.textContent || '-';
+
+  // Klonun bağlı olduğu oyunun adını bulalım
+    let cloneOfName = '-';
+    if (cloneOfId) {
+      const parentGame = allGames.find(g => g.getAttribute('id') === cloneOfId);
+      if (parentGame) cloneOfName = parentGame.getAttribute('name') || `(ID: ${cloneOfId})`;
+  }
+
     const row = tbody.insertRow();
 
-    // ⬅️ Checkbox hücresi
+  // Checkbox hücresi
     const checkboxCell = row.insertCell();
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -43,14 +54,23 @@ function listGames(filterText = "") {
     // Oyun adı hücresi
     row.insertCell().textContent = name;
 
-    // Tekil silme butonu
-    const delCell = row.insertCell();
-    const btn = document.createElement('button');
-    btn.textContent = 'Sil';
-    btn.className = 'danger';
-    btn.onclick = () => deleteGame(game, row);
-    delCell.appendChild(btn);
-  });
+  // Clone Of hücresi
+  row.insertCell().textContent = cloneOfName;
+
+  // Kategori hücresi
+  row.insertCell().textContent = category;
+
+  // Silme butonu hücresi
+  const delCell = row.insertCell();
+  const btn = document.createElement('button');
+  btn.textContent = 'Sil';
+  btn.className = 'danger';
+  btn.onclick = () => deleteGame(game, row);
+  delCell.appendChild(btn);
+
+  // Klon oyun ise satıra özel class verelim
+  if (cloneOfId) row.classList.add('cloneRow');
+});
 
   // Butonu göster/gizle
   const deleteBtn = document.getElementById('deleteSelectedBtn');
