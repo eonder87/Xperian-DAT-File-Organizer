@@ -1,6 +1,7 @@
 // Küresel değişkenler
 let xmlDoc;          // DOM hâline getirilmiş .dat
 let changed = false; // Silme yapıldı mı?
+let filteredGames = [];  // Arama sonucu buraya yazılacak
 
 // 1) Dosya yüklendiğinde
 document.getElementById('fileInput').addEventListener('change', async (e) => {
@@ -16,12 +17,18 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
 });
 
 // 2) XML içindeki <game> nodelarını tabloya bas
-function listGames() {
+function listGames(filterText = "") {
   const tbody = document.getElementById('gameList');
   tbody.innerHTML = '<tr><th>Ad</th><th>Sil</th></tr>';
 
-  const games = Array.from(xmlDoc.getElementsByTagName('game'));
-  games.forEach((game, idx) => {
+  const allGames = Array.from(xmlDoc.getElementsByTagName('game'));
+
+  filteredGames = allGames.filter((game) => {
+    const name = game.getAttribute('name')?.toLowerCase() || "";
+    return name.includes(filterText.toLowerCase());
+  });
+
+  filteredGames.forEach((game, idx) => {
     const name = game.getAttribute('name') || `Game #${idx+1}`;
     const row = tbody.insertRow();
     row.insertCell().textContent = name;
@@ -34,6 +41,11 @@ function listGames() {
     delCell.appendChild(btn);
   });
 }
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  const text = e.target.value;
+  listGames(text); // filtreli listele
+});
 
 // 3) Silme işlemi
 function deleteGame(node, row) {
