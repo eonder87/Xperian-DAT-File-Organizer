@@ -9,21 +9,18 @@
 <body>
   <h1>Oyun Listesi</h1>
 
-  <!-- 1) Dosya seç -->
   <input type="file" id="fileInput" accept=".dat,.xml" />
   <input type="text" id="searchInput" placeholder="Oyun ara..." />
 
-  <!-- 2) Liste burada oluşacak -->
-  <table id="gameList" border="1" cellpadding="4"></table>
+  <table id="gameList"></table>
 
-  <!-- 3) Kaydet (silme sonrası) -->
-  <button id="deleteSelectedBtn" hidden>Seçilileri Sil</button>
-  <button id="saveBtn" hidden>Değişiklikleri Kaydet (.dat indir)</button>
-
-<div id="multiControls">
-  <button id="selectAllBtn">Tümünü Seç</button>
-  <button id="deselectAllBtn">Tümünü Kaldır</button>
-</div>
+  <div id="controlPanel">
+    <button id="toggleThemeBtn">🌙 Gece Modu</button>
+    <button id="selectAllBtn">Tümünü Seç</button>
+    <button id="deselectAllBtn">Tümünü Kaldır</button>
+    <button id="deleteSelectedBtn" class="danger" hidden>Seçilileri Sil</button>
+    <button id="saveBtn" hidden>Kaydet (.dat indir)</button>
+  </div>
 
   <script src="app.js"></script>
 </body>

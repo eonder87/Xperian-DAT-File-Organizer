@@ -123,3 +123,11 @@ document.getElementById('selectAllBtn').addEventListener('click', () => {
 document.getElementById('deselectAllBtn').addEventListener('click', () => {
   document.querySelectorAll('.selectGame').forEach(cb => cb.checked = false);
 });
+
+document.getElementById('toggleThemeBtn').addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+
+  const btn = document.getElementById('toggleThemeBtn');
+  const isDark = document.body.classList.contains('dark');
+  btn.textContent = isDark ? '☀️ Gündüz Modu' : '🌙 Gece Modu';
+});
