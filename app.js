@@ -19,7 +19,7 @@ document.getElementById('fileInput').addEventListener('change', async (e) => {
 // 2) XML içindeki <game> nodelarını tabloya bas
 function listGames(filterText = "") {
   const tbody = document.getElementById('gameList');
-  tbody.innerHTML = '<tr><th>Ad</th><th>Sil</th></tr>';
+  tbody.innerHTML = '<tr><th></th><th>Ad</th><th>Sil</th></tr>';
 
   const allGames = Array.from(xmlDoc.getElementsByTagName('game'));
 
@@ -31,8 +31,19 @@ function listGames(filterText = "") {
   filteredGames.forEach((game, idx) => {
     const name = game.getAttribute('name') || `Game #${idx+1}`;
     const row = tbody.insertRow();
+
+    // ⬅️ Checkbox hücresi
+    const checkboxCell = row.insertCell();
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'selectGame';
+    checkbox.dataset.index = idx;
+    checkboxCell.appendChild(checkbox);
+
+    // Oyun adı hücresi
     row.insertCell().textContent = name;
 
+    // Tekil silme butonu
     const delCell = row.insertCell();
     const btn = document.createElement('button');
     btn.textContent = 'Sil';
@@ -40,6 +51,10 @@ function listGames(filterText = "") {
     btn.onclick = () => deleteGame(game, row);
     delCell.appendChild(btn);
   });
+
+  // Butonu göster/gizle
+  const deleteBtn = document.getElementById('deleteSelectedBtn');
+  if (deleteBtn) deleteBtn.hidden = filteredGames.length === 0;
 }
 
 document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -73,4 +88,28 @@ document.getElementById('saveBtn').addEventListener('click', () => {
   URL.revokeObjectURL(url);
   changed = false;
   alert('Yeni .dat indirildi!');
+});
+
+document.getElementById('deleteSelectedBtn').addEventListener('click', () => {
+  const checkboxes = document.querySelectorAll('.selectGame:checked');
+  if (checkboxes.length === 0) {
+    alert("Hiçbir oyun seçilmedi.");
+    return;
+  }
+
+  if (!confirm(`${checkboxes.length} oyun silinecek. Emin misin?`)) return;
+
+  checkboxes.forEach(cb => {
+    const row = cb.closest('tr');
+    const name = row.cells[1].textContent;
+
+    const allGames = Array.from(xmlDoc.getElementsByTagName('game'));
+    const match = allGames.find(g => (g.getAttribute('name') || "") === name);
+    if (match) match.parentNode.removeChild(match);
+
+    row.remove();
+  });
+
+  changed = true;
+  document.getElementById('saveBtn').hidden = false;
 });
